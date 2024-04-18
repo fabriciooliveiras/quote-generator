@@ -27,6 +27,7 @@ body{
     -moz-box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.2);
     box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.2);
     padding:20px 30px;
+    position: relative;
 }
 
 .quote-text{
@@ -74,6 +75,26 @@ button:active{
     transform:translate(0,0.2rem);
     box-shadow: 0 0.1rem rgba(255,255,255,0.6);
 }
+
+#loader-container{
+    width: 100%;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+#loader-container svg{
+    width: 80%;
+    height: 80%;
+}
+
+#loader-container.hidden{
+    display: none;
+}
+
 @media screen and (min-width:1000px){
     .quote-container{
         margin:0;
@@ -85,3 +106,4 @@ button:active{
         font-size: 1.5rem;
     }
 }
+
