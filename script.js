@@ -4,11 +4,21 @@ let apiQuotes = [];
 //CURRENT QUOTE SELECTED FROM THE FULL LIST
 let currentQuote = {};
 
+//DOM ELEMENTS
+const quoteText = document.getElementById("quote-text");
+const author = document.getElementById("author");
+const quote = document.getElementById("quote");
+const newQuoteBtn = document.getElementById("new-quote");
+const loaderContainer = document.getElementById("loader-container");
+const tweetBtn = document.getElementById("x-twitter");
+
 //STARTS THE APP 
 getQuotes();
 
 //LISTENNER FOR THE NEW QUOTE BUTTON
-document.getElementById("new-quote").addEventListener("click",newQuote);
+newQuoteBtn.addEventListener("click",newQuote);
+
+tweetBtn.addEventListener("click",tweet);
 
 
 async function getQuotes(){
@@ -29,8 +39,8 @@ function newQuote(){
     loader("show");
 
     //HIDE OLD INFO
-    document.getElementById("quote-text").style.opacity = "0";
-    document.getElementById("author").style.opacity = "0";
+    quoteText.style.opacity = "0";
+    author.style.opacity = "0";
 
     //GET RANDOM QUOTE
     currentQuote = apiQuotes[Math.floor(Math.random()*apiQuotes.length)];
@@ -38,20 +48,37 @@ function newQuote(){
     loader("hide");
 
     //SHOW NEW INFO
-    document.getElementById("quote-text").style.opacity = "1";
-    document.getElementById("author").style.opacity = "1";
+    quoteText.style.opacity = "1";
+    author.style.opacity = "1";
     
+    //IF THE TEXT LENGTH IS TO BIG, WE LOWER THE FONT SIZE
+    (currentQuote.text.length > 120) ? quote.classList.add("long-quote") : quote.classList.remove("long-quote");
+
     //UPDATES THE UI
-    document.getElementById("quote").innerText = currentQuote.text;
-    let author = (currentQuote.author != null) ? currentQuote.author : "Unknown author";
-    document.getElementById("author").innerText = author;
+    quote.innerText = currentQuote.text;
+    let authorText = (currentQuote.author != null) ? currentQuote.author : "Unknown author";
+    author.innerText = authorText;
 
 }
 
 function loader(status){
     if(status == "show"){
-        document.getElementById("loader-container").classList.remove("hidden");
+        loaderContainer.classList.remove("hidden");
     }else{
-        document.getElementById("loader-container").classList.add("hidden");
+        loaderContainer.classList.add("hidden");
     }
+}
+
+function tweet(){
+    let url =`https://twitter.com/intent/tweet?text="${currentQuote.text}"%0D%0A-${currentQuote.author}`;
+    
+
+    //VERSION WITH WINDOW.OPEN
+    window.open(url,"_blank");
+
+    //VERSION WITH <A> TAG
+   /*  let el = document.createElement("a");
+    el.href = url;
+    el.target = "_blank";
+    el.click(); */
 }
