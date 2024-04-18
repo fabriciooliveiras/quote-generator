@@ -18,7 +18,7 @@ getQuotes();
 //LISTENNER FOR THE NEW QUOTE BUTTON
 newQuoteBtn.addEventListener("click",newQuote);
 
-tweetBtn.addEventListener("click",tweet);
+tweetBtn.addEventListener("click",tweetQuote);
 
 
 async function getQuotes(){
@@ -36,7 +36,7 @@ async function getQuotes(){
 
 function newQuote(){
     
-    loader("show");
+    toggleLoader("show");
 
     //HIDE OLD INFO
     quoteText.style.opacity = "0";
@@ -45,7 +45,7 @@ function newQuote(){
     //GET RANDOM QUOTE
     currentQuote = apiQuotes[Math.floor(Math.random()*apiQuotes.length)];
 
-    loader("hide");
+    toggleLoader("hide");
 
     //SHOW NEW INFO
     quoteText.style.opacity = "1";
@@ -61,7 +61,7 @@ function newQuote(){
 
 }
 
-function loader(status){
+function toggleLoader(status){
     if(status == "show"){
         loaderContainer.classList.remove("hidden");
     }else{
@@ -69,7 +69,7 @@ function loader(status){
     }
 }
 
-function tweet(){
+function tweetQuote(){
     let url =`https://twitter.com/intent/tweet?text="${currentQuote.text}"%0D%0A-${currentQuote.author}`;
     
 
